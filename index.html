@@ -1,0 +1,181 @@
+<!doctype html>
+<html itemscope itemtype="http://schema.org/WebPage" lang="en" class="no-js">
+  <head>
+	<meta name="generator" content="Hugo 0.121.2">
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="alternate" type="application/rss&#43;xml" href="/index.xml">
+<meta name="robots" content="index, follow">
+
+
+<link rel="shortcut icon" href="/favicons/favicon.ico" >
+<link rel="apple-touch-icon" href="/favicons/apple-touch-icon-180x180.png" sizes="180x180">
+<link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
+<link rel="icon" type="image/png" href="/favicons/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicons/android-36x36.png" sizes="36x36">
+<link rel="icon" type="image/png" href="/favicons/android-48x48.png" sizes="48x48">
+<link rel="icon" type="image/png" href="/favicons/android-72x72.png" sizes="72x72">
+<link rel="icon" type="image/png" href="/favicons/android-96x96.png" sizes="96x96">
+<link rel="icon" type="image/png" href="/favicons/android-144x144.png" sizes="144x144">
+<link rel="icon" type="image/png" href="/favicons/android-192x192.png" sizes="192x192">
+
+<title>Fuzzing Matter(s)</title>
+<meta name="description" content="A White Paper for Fuzzing the Matter Protocol">
+<meta property="og:title" content="Fuzzing Matter(s)" />
+<meta property="og:description" content="A White Paper for Fuzzing the Matter Protocol" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="/" /><meta property="og:image" content="/featured-background.jpg" /><meta property="og:site_name" content="Fuzzing Matter(s)" />
+
+<meta itemprop="name" content="Fuzzing Matter(s)">
+<meta itemprop="description" content="A White Paper for Fuzzing the Matter Protocol"><meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="/featured-background.jpg" /><meta name="twitter:title" content="Fuzzing Matter(s)"/>
+<meta name="twitter:description" content="A White Paper for Fuzzing the Matter Protocol"/>
+
+
+
+
+<link rel="preload" href="/scss/main.min.9d0cbaa1b344b1333f0397e66235629be3ef760469c16413abd609b3ba3dc13f.css" as="style">
+<link href="/scss/main.min.9d0cbaa1b344b1333f0397e66235629be3ef760469c16413abd609b3ba3dc13f.css" rel="stylesheet" integrity="">
+
+<script
+  src="https://code.jquery.com/jquery-3.6.3.min.js"
+  integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ=="
+  crossorigin="anonymous"></script>
+
+  </head>
+  <body class="td-home">
+    <header>
+      <nav class="td-navbar navbar-dark js-navbar-scroll td-navbar-cover">
+<div class="container-fluid flex-column flex-md-row">
+  <a class="navbar-brand" href="/"><span class="navbar-brand__logo navbar-logo"><svg width="512" height="512" viewBox="0 0 512 512" id="svg1" inkscape:version="1.3.2 (091e20e, 2023-11-25)" sodipodi:docname="logo.svg" inkscape:export-filename="logo-matter-shield-only.png" inkscape:export-xdpi="768.38" inkscape:export-ydpi="768.38" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg"><sodipodi:namedview id="namedview1" pagecolor="#505050" bordercolor="#ffffff" borderopacity="1" inkscape:showpageshadow="0" inkscape:pageopacity="0" inkscape:pagecheckerboard="1" inkscape:deskcolor="#d1d1d1" inkscape:document-units="px" inkscape:zoom=".73964919" inkscape:cx="-129.11526" inkscape:cy="223.07873" inkscape:window-width="1512" inkscape:window-height="843" inkscape:window-x="0" inkscape:window-y="38" inkscape:window-maximized="1" inkscape:current-layer="layer1" showgrid="false"><sodipodi:guide position="256,62.805905" orientation="512,0" id="guide1" inkscape:locked="false"/><sodipodi:guide position="0,256" orientation="0,512" id="guide2" inkscape:locked="false"/></sodipodi:namedview><defs id="defs1"><linearGradient id="linearGradient80" inkscape:label="circle"><stop style="stop-color:#ff6633;stop-opacity:1" offset="0" id="stop79"/><stop style="stop-color:#ffcc00;stop-opacity:1" offset="1" id="stop80"/></linearGradient><linearGradient id="swatch71"><stop style="stop-color:#ff6633;stop-opacity:1" offset="0" id="stop74"/><stop style="stop-color:#ff9900;stop-opacity:1" offset="1" id="stop75"/></linearGradient><linearGradient id="swatch71-1" inkscape:label="circle"><stop style="stop-color:#ff6633;stop-opacity:1" offset="0" id="stop71"/><stop style="stop-color:#ffcc00;stop-opacity:1" offset="1" id="stop72"/></linearGradient><linearGradient inkscape:collect="always" xlink:href="#swatch71-1" id="linearGradient132" x1="69.039062" y1="162.51953" x2="442.96094" y2="162.51953" gradientUnits="userSpaceOnUse"/><linearGradient inkscape:collect="always" xlink:href="#swatch71-1" id="linearGradient134" x1="98.269531" y1="177.13477" x2="413.73047" y2="177.13477" gradientUnits="userSpaceOnUse"/><linearGradient inkscape:collect="always" xlink:href="#swatch71-1" id="linearGradient136" x1="36.431641" y1="256" x2="475.56836" y2="256" gradientUnits="userSpaceOnUse"/><linearGradient inkscape:collect="always" xlink:href="#swatch71-1" id="linearGradient141" x1="124.87695" y1="190.43848" x2="387.12305" y2="190.43848" gradientUnits="userSpaceOnUse"/><linearGradient inkscape:collect="always" xlink:href="#swatch71-1" id="linearGradient143" x1="149.10156" y1="202.55078" x2="362.89844" y2="202.55078" gradientUnits="userSpaceOnUse"/><linearGradient inkscape:collect="always" xlink:href="#swatch71-1" id="linearGradient145" x1="171.15234" y1="213.57617" x2="340.84766" y2="213.57617" gradientUnits="userSpaceOnUse"/></defs><g inkscape:label="Layer 1" inkscape:groupmode="layer" id="layer1" style="display:inline"><g id="g94" inkscape:label="g94" style="display:none"><path id="path16" style="fill:#000;fill-opacity:1;stroke:none;stroke-width:10.3857;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1" inkscape:label="path16" d="M256 36.931641A219.06914 219.06914.0 0036.931641 256 219.06914 219.06914.0 00256 475.06836 219.06914 219.06914.0 00475.06836 256 219.06914 219.06914.0 00256 36.931641zm0 19.640625A199.42809 199.42809.0 01455.42773 256 199.42809 199.42809.0 01256 455.42773 199.42809 199.42809.0 0156.572266 256 199.42809 199.42809.0 01256 56.572266z"/><path id="path11" style="fill:#000;fill-opacity:1;stroke:none;stroke-width:.791282;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1" d="M185.46395 339.12412V326.44578H172.8419l-64.10145 63.82951-.22821 13.02371 12.91144-.0298z" sodipodi:nodetypes="ccccccc" inkscape:label="path11"/><path id="path100" style="display:none;fill:#000;fill-opacity:1;stroke:none;stroke-width:10.3857;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1" inkscape:label="path16" d="M256 36.931641A219.06914 219.06914.0 0036.931641 256 219.06914 219.06914.0 00256 475.06836 219.06914 219.06914.0 00475.06836 256 219.06914 219.06914.0 00256 36.931641zm0 19.640625A199.42809 199.42809.0 01455.42773 256 199.42809 199.42809.0 01256 455.42773 199.42809 199.42809.0 0156.572266 256 199.42809 199.42809.0 01256 56.572266z"/><path id="path92" style="fill:#000;fill-opacity:1;stroke:none;stroke-width:.791282;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1" d="m326.39653 339.12412v-12.67834h12.62205l64.10145 63.82951.22821 13.02371-12.91144-.0298z" sodipodi:nodetypes="ccccccc"/><path id="path93" style="fill:#000;fill-opacity:1;stroke:none;stroke-width:.791282;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1" d="m247.06696 147.34554 8.96494 8.96494 8.92515-8.92515.19229-90.46085-9.04778-9.370518-9.1087 9.150838z" sodipodi:nodetypes="ccccccc"/></g><path id="path118" style="display:inline;fill:#000;fill-opacity:1;stroke:#fff;stroke-width:1;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1" inkscape:label="cerchio" d="M442.96094 256H426.19922A170.19878 170.19878.0 01256 426.19922 170.19878 170.19878.0 0185.800781 256H69.039062A186.96113 186.96113.0 00256 442.96094 186.96113 186.96113.0 00442.96094 256z"/><path id="path130" style="display:inline;fill:url(#linearGradient132);fill-opacity:1;stroke:#000;stroke-width:1;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1" inkscape:label="cerchio" d="M256 69.039062A186.96113 186.96113.0 0069.039062 256H85.800781A170.19878 170.19878.0 01256 85.800781 170.19878 170.19878.0 01426.19922 256h16.76172A186.96113 186.96113.0 00256 69.039062z"/><path id="path119" style="display:inline;fill:#000;fill-opacity:1;stroke:#fff;stroke-width:1;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1" inkscape:label="cerchio" d="M413.73047 256H399.58984A143.59003 143.59003.0 01256 399.58984 143.59003 143.59003.0 01112.41016 256H98.269531A157.73177 157.73177.0 00256 413.73047 157.73177 157.73177.0 00413.73047 256z"/><path id="path128" style="display:inline;fill:url(#linearGradient134);fill-opacity:1;stroke:#000;stroke-width:1;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1" inkscape:label="cerchio" d="M256 98.269531A157.73177 157.73177.0 0098.269531 256H112.41016A143.59003 143.59003.0 01256 112.41016 143.59003 143.59003.0 01399.58984 256h14.14063A157.73177 157.73177.0 00256 98.269531z"/><path id="path122" style="display:inline;fill:#000;fill-opacity:1;stroke:#fff;stroke-width:1;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1" inkscape:label="cerchio" d="M387.12305 256H375.36719A119.3669 119.3669.0 01256 375.36719 119.3669 119.3669.0 01136.63281 256H124.87695A131.12297 131.12297.0 00256 387.12305 131.12297 131.12297.0 00387.12305 256z"/><path id="path137" style="display:inline;fill:url(#linearGradient141);fill-opacity:1;stroke:#000;stroke-width:1;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1" inkscape:label="cerchio" d="M256 124.87695A131.12297 131.12297.0 00124.87695 256h11.75586A119.3669 119.3669.0 01256 136.63281 119.3669 119.3669.0 01375.36719 256h11.75586A131.12297 131.12297.0 00256 124.87695z"/><path id="path123" style="display:inline;fill:#000;fill-opacity:1;stroke:#fff;stroke-width:1;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1" inkscape:label="cerchio" d="M362.89844 256H353.31445A97.315496 97.315496.0 01256 353.31445 97.315496 97.315496.0 01158.68555 256h-9.58399A106.89979 106.89979.0 00256 362.89844 106.89979 106.89979.0 00362.89844 256z"/><path id="path138" style="display:inline;fill:url(#linearGradient143);fill-opacity:1;stroke:#000;stroke-width:1;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1" inkscape:label="cerchio" d="M256 149.10156A106.89979 106.89979.0 00149.10156 256h9.58399A97.315496 97.315496.0 01256 158.68555 97.315496 97.315496.0 01353.31445 256H362.89844A106.89979 106.89979.0 00256 149.10156z"/><path id="path124" style="display:inline;fill:#000;fill-opacity:1;stroke:#fff;stroke-width:1;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1" inkscape:label="cerchio" d="M340.84766 256H333.24023A77.241119 77.241119.0 01256 333.24023 77.241119 77.241119.0 01178.75977 256H171.15234A84.848352 84.848352.0 00256 340.84766 84.848352 84.848352.0 00340.84766 256z"/><path id="path140" style="display:inline;fill:url(#linearGradient145);fill-opacity:1;stroke:#000;stroke-width:1;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1" inkscape:label="cerchio" d="M256 171.15234A84.848352 84.848352.0 00171.15234 256H178.75977A77.241119 77.241119.0 01256 178.75977 77.241119 77.241119.0 01333.24023 256H340.84766A84.848352 84.848352.0 00256 171.15234z"/><path id="path372" style="display:inline;fill:#000;stroke:#fc0;stroke-width:8;stroke-dasharray:none;stroke-opacity:1;fill-opacity:1" inkscape:label="house" d="M256.35352 171.13672 251.60938 175.93945 242.52734 185.13672 236.80078 190.93555 232.05664 195.74023l-3.35547 3.39649-11.45312 11.59961L214.87695 213.13867 212.50391 215.53906l-11.45313 11.59961-3.35351 3.39649L192.95117 235.33984 187.22461 241.13867l-9.08203 9.19727L173.40039 255.14062H178.14258h19.55469V256 258.53711v16.4043 4.80273V286.53711 294.74023v13.00586V314.53906 314.54102h6.70898 12.8418H225.34766h6.70898H236.80078h16.19727 3.35547H259.70898h16.19727H280.64844 287.35938 295.45898h12.8418H315.00977V314.53906 307.74609 294.74023 286.53711 279.74414v-4.80273-16.4043V256 255.14062H334.5625 339.30664L334.5625 250.33594 325.48242 241.13867 319.75391 235.33984 315.00977 230.53516l-3.35352-3.39649-11.45508-11.59961L297.83008 213.13867 295.45898 210.73633l-11.45507-11.59961-3.35352-3.39649L275.90625 190.93555 270.17969 185.13672 261.0957 175.93945 256.35352 171.13672z"/><path id="path94" style="display:inline;fill:url(#linearGradient136);stroke:#000;stroke-width:1;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;fill-opacity:1" inkscape:label="path16" d="M256 36.931641A219.06914 219.06914.0 0036.931641 256 219.06914 219.06914.0 00256 475.06836 219.06914 219.06914.0 00475.06836 256 219.06914 219.06914.0 00256 36.931641zm-9.00781 20.349609.0742 90.06445 8.96484 8.96485 8.92578-8.92578.19141-90.091801A199.42809 199.42809.0 01455.42773 256 199.42809 199.42809.0 01402.93164 390.08984l-63.91211-63.64453H326.39648V339.125l63.69922 63.80078A199.42809 199.42809.0 01256 455.42773 199.42809 199.42809.0 01121.83008 402.86328L185.46484 339.125V326.44531H172.8418l-63.83789 63.56836A199.42809 199.42809.0 0156.572266 256 199.42809 199.42809.0 01246.99219 57.28125z"/><rect style="fill:#fc0;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:16.922;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1" id="rect148" width="26.353655" height="30.25" x="242.82318" y="283.29883"/></g><g inkscape:groupmode="layer" id="layer2" inkscape:label="Wifi"><circle style="display:inline;fill:#fff;fill-opacity:1;stroke:none;stroke-width:.359679;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:0;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal" id="path4-6" cx="288.46729" cy="278.20654" r="5.0922718"/><circle style="display:inline;fill:#fff;fill-opacity:1;stroke:none;stroke-width:.359679;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:0;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal" id="path4-6-4" cx="223.53273" cy="278.20654" r="5.0922718"/><path style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#fff;stroke-width:2;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1" d="M256 244.11046V256h32.46729v22.20654" id="path148"/><path style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#fff;stroke-width:2;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1" d="m256 256h-32.46727v22.20654" id="path149"/><path style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#fff;stroke-width:3;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1" d="m239.78008 223.39817c11.2476-11.39145 22.01997-10.05008 32.4673.0" id="path150" sodipodi:nodetypes="cc"/><path style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#fff;stroke-width:3;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1" d="m243.2194 231.12985c8.86464-8.97802 17.35475-7.92084 25.58867.0" id="path151" sodipodi:nodetypes="cc"/><path style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#fff;stroke-width:3;stroke-linejoin:miter;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1" d="m247.951 236.51566c5.58632-5.65777 10.93661-4.99156 16.12547.0" id="path152" sodipodi:nodetypes="cc"/><circle style="display:inline;fill:#fff;fill-opacity:1;stroke:none;stroke-width:.359679;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:0;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;paint-order:normal" id="circle152" cx="256" cy="243.79991" r="5.0922718"/></g></svg></span><span class="navbar-brand__name">Fuzzing Matter(s)</span></a>
+  <div class="td-navbar-nav-scroll ms-md-auto" id="main_navbar">
+    <ul class="navbar-nav">
+      </ul>
+  </div>
+  <div class="d-none d-lg-block">
+    <div class="td-search">
+  <div class="td-search__icon"></div>
+  <input type="search" class="td-search__input form-control td-search-input" placeholder="Search this site…" aria-label="Search this site…" autocomplete="off">
+</div>
+  </div>
+</div>
+</nav>
+    </header>
+    <div class="container-fluid td-default td-outer">
+      <main role="main" class="td-main">
+        
+
+<link rel="preload" as="image" href="/featured-background_huce81bf59955dc475c1f60da2b1ead18a_3176978_960x540_fill_q100_catmullrom_top.jpg" media="(max-width: 1200px)">
+<link rel="preload" as="image" href="/featured-background_huce81bf59955dc475c1f60da2b1ead18a_3176978_1920x1080_fill_q100_catmullrom_top.jpg" media="(min-width: 1200px)">
+<style>
+#td-cover-block-0 {
+  background-image: url(/featured-background_huce81bf59955dc475c1f60da2b1ead18a_3176978_960x540_fill_q100_catmullrom_top.jpg);
+}
+@media only screen and (min-width: 1200px) {
+  #td-cover-block-0 {
+    background-image: url(/featured-background_huce81bf59955dc475c1f60da2b1ead18a_3176978_1920x1080_fill_q100_catmullrom_top.jpg);
+  }
+}
+</style>
+<section id="td-cover-block-0" class="row td-cover-block td-cover-block--height-full js-td-cover td-overlay td-overlay--dark -bg-dark">
+  <div class="col-12">
+    <div class="container td-overlay__inner">
+      <div class="text-center">
+        <h1 class="display-1 mt-0 mt-md-5 pb-4"><img class="td-cover-logo" src="/logo_hu9ff1142170315197db58f685e0ab5789_68327_70x70_fit_catmullrom_3.png" alt="Welcome to the Fuzzing Matter(s) Research Project Logo">Welcome to the Fuzzing Matter(s) Research Project</h1>
+        
+        <div class="pt-3 lead">
+          
+              <a class="btn btn-lg btn-primary me-3 mb-4" href="/paper">
+  Paper not out yet <i class="fas fa-arrow-alt-circle-right ms-2"></i>
+</a>
+<a class="btn btn-lg btn-secondary me-3 mb-4" href="https://github.com/fuzzingmatter/fuzzingmatter">
+  Source <i class="fab fa-github ms-2 "></i>
+</a>
+<p class="lead mt-5">Let's fuzz devices for fun and research!</p>
+<p><a class="btn btn-link text-info" href="#td-block-1" aria-label="Read more"><i class="fa-solid fa-circle-chevron-down" style="font-size: 400%"></i></a></p>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</section>
+
+<div><a id="td-block-1" class="td-offset-anchor"></a></div>
+<section class="row td-box td-box--primary position-relative td-box--height-auto">
+<div class="col-12">
+<div class="container text-center td-arrow-down">
+<div class="h4 mb-0">
+<p><b>Title:</b> Fuzzing Matter(s): A White Paper for Fuzzing the Matter Protocol </br>
+<b>Author:</b> <a href="https://marcellomaugeri.github.io">Marcello Maugeri</a>, PhD Student at University of Catania, Italy </br></p>
+<div style="text-align: justify"><b>Abstract:</b> IoT and smart home devices have transformed daily life, consequently raising more and more concerns about security vulnerabilities. Robust security testing methods are essential to fortify devices against potential threats. While dynamic analysis techniques, such as fuzzing, help identify vulnerabilities, some challenges arise due to diverse architectures, communication channels and protocols. Testing directly on devices overcomes difficulties in firmware emulation, but lack of protocol standardisation still poses hurdles. The recently released <i>Matter</i> protocol aims to unify smart home ecosystems, thus also simplifying security testing. In particular, Matter inherits the concept of <i>Cluster</i> from <i>Zigbee</i> in its <i>Data Model</i>. The Data Model clearly defines attributes, commands, status codes and events that could be leveraged to design automated security testing techniques such as fuzzing. This paper proposes the design of a fuzzing framework for Matter-enabled smart home devices. The framework employs stateful fuzzing to cover the inherent state-fullness of IoT devices. Such a framework would bestow benefits upon manufacturers, researchers, and end-users.
+</div>
+<div style="text-align: justify">
+This paper has been accepted at ICISSP 2024 and will be released in the following days. The project is not developed yet, but we are looking for contributors to help us build it and publish together.
+</div>
+</div>
+</div>
+</div>
+</section>
+<div><a id="td-block-2" class="td-offset-anchor"></a></div>
+<section class="row td-box td-box--dark td-box--height-auto">
+<div class="col">
+<div class="row">
+<div class="col-lg-4 mb-5 mb-lg-0 text-center">
+<div class="mb-4 h1">
+  <i class="fas fa-lightbulb"></i>
+</div>
+<h4 class="h3">Interested in the idea!</h4>
+<div class="mb-0">
+<p>Send me an email at <a href="mailto:marcello.maugeri@phd.unict.it">marcello.maugeri@phd.unict.it</a></p>
+<p>Please follow this space for updates!</p>
+</div>
+</div>
+<div class="col-lg-4 mb-5 mb-lg-0 text-center">
+<div class="mb-4 h1">
+  <i class="fab fa-github"></i>
+</div>
+<h4 class="h3">Contributions welcome!</h4>
+<div class="mb-0">
+<p>We do a <a href="https://github.com/FuzzingMatter/fuzzingmatter/pullss">Pull Request</a> contributions workflow on <strong>GitHub</strong>. New users are always welcome!</p>
+</div>
+</div>
+<div class="col-lg-4 mb-5 mb-lg-0 text-center">
+<div class="mb-4 h1">
+  <i class="fab fa-discord"></i>
+</div>
+<h4 class="h3">A Discord channel will be open soon</h4>
+<div class="mb-0">
+<p>For announcement of latest features, coordination between contributors and general discussion.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+
+
+      </main>
+      <footer class="td-footer row d-print-none">
+  <div class="container-fluid">
+    <div class="row mx-md-2">
+      <div class="td-footer__left col-6 col-sm-4 order-sm-1">
+        
+      </div><div class="td-footer__right col-6 col-sm-4 order-sm-3">
+        
+      </div><div class="td-footer__center col-12 col-sm-4 py-2 order-sm-2">
+        <span class="td-footer__copyright">&copy;
+    2024
+    <span class="td-footer__authors">Marcello Maugeri | <a href="https://creativecommons.org/licenses/by/4.0">CC BY 4.0</a> | <a href="https://www.docsy.dev/">Designed with Hugo and Docsy</a> |</span></span><span class="td-footer__all_rights_reserved">All Rights Reserved</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <script src="/js/main.min.1f48fc7981e4db829114650dc98d270b6642a46c1e4ebddb8389ff0a463a6328.js" integrity="sha256-H0j8eYHk24KRFGUNyY0nC2ZCpGweTr3bg4n/CkY6Yyg=" crossorigin="anonymous"></script>
+<script defer src="/js/click-to-copy.min.f724d3de49218995223b7316aa2e53e2b34bf42026bf399ebb21bb02212402d1.js" integrity="sha256-9yTT3kkhiZUiO3MWqi5T4rNL9CAmvzmeuyG7AiEkAtE=" crossorigin="anonymous"></script>
+<script src='/js/tabpane-persist.js'></script>
+
+  </body>
+</html>
